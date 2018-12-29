@@ -14,7 +14,6 @@ import java.util.Date;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@ToString
 @Builder
 public class ProductOrder implements Serializable {
 

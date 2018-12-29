@@ -13,4 +13,12 @@ public interface ProductOrderService {
      * @return
      */
     ProductOrder save(int userId, int productId);
+
+    /**
+     * 使用openReign的方法来调用服务
+     * @param userId
+     * @param productId
+     * @return
+     */
+    ProductOrder saveByOpenReign(int userId,int productId);
 }

@@ -1,7 +1,10 @@
 package com.tj.order_service.service.impl;
 
+import com.fasterxml.jackson.databind.JsonNode;
 import com.tj.order_service.domain.ProductOrder;
+import com.tj.order_service.service.ProductClient;
 import com.tj.order_service.service.ProductOrderService;
+import com.tj.order_service.utils.JsonUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.client.ServiceInstance;
 import org.springframework.cloud.client.loadbalancer.LoadBalancerClient;
@@ -42,9 +45,30 @@ public class ProductOrderServiceImpl implements ProductOrderService {
         //获取商品详情 todo
         ProductOrder productOrder= ProductOrder.builder().createTime(new Date())
                 .userId(userId).tradeNo(UUID.randomUUID().toString())
-                .productName(productMap.get("name")+toString())
+                .productName(productMap.get("name").toString())
                 .price(Integer.parseInt(productMap.get("price").toString())).build();
 
         return productOrder;
     }
+
+
+    @Autowired
+    private ProductClient productClient;
+    @Override
+    public ProductOrder saveByOpenReign(int userId, int productId) {
+        //调用订单服务
+        String response=productClient.findById(productId);
+
+        //调用用户服务，主要是获取用户名称，用户的级别或者积分信息
+        //TODO
+
+        JsonNode jsonNode=JsonUtils.str2JsonNode(response);
+        ProductOrder productOrder= ProductOrder.builder().createTime(new Date())
+                .userId(userId).tradeNo(UUID.randomUUID().toString())
+                .productName(jsonNode.get("name").toString())
+                .price(Integer.parseInt(jsonNode.get("price").toString())).build();
+        return productOrder;
+    }
+
+
 }
