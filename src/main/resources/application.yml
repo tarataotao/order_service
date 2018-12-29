@@ -13,3 +13,15 @@ spring:
 product-service:
   ribbon:
     NFLoadBalancerRuleClassName: com.netflix.loadbalancer.RandomRule
+
+feign:
+  hystrix:
+    enabled: true
+  client:
+    default:
+      connectTimeout: 2000
+      readTimeout: 2000
+
+
+
+#修改调用超时时间
