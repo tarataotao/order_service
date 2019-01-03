@@ -34,7 +34,7 @@ feign:
         connectTimeout: 4000
         readTimeout: 4000
 
-#把hystrix超时时间禁用
+#把hystrix超时时间禁用 (程序中不可以使用，否则会出大问题)
 #hystrix:
 #  command:
 #    default:
@@ -52,3 +52,10 @@ hystrix:
         isolation:
           thread:
             timeoutInMilliseconds: 4000
+
+#暴露全部监控 断路器仪表盘配置,访问路口 http://localhost:port/hystrix
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
