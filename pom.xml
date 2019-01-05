@@ -77,6 +77,16 @@
 			<artifactId>spring-boot-starter-actuator</artifactId>
 		</dependency>
 
+        <!--sleuth-->
+       <!-- <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-sleuth</artifactId>
+        </dependency>-->
+		<!--里面包含两个依赖，sleuth和zipkin-->
+		<dependency>
+			<groupId>org.springframework.cloud</groupId>
+			<artifactId>spring-cloud-starter-zipkin</artifactId>
+		</dependency>
 
 	</dependencies>
 

@@ -5,6 +5,7 @@ import com.tj.order_service.domain.ProductOrder;
 import com.tj.order_service.service.ProductClient;
 import com.tj.order_service.service.ProductOrderService;
 import com.tj.order_service.utils.JsonUtils;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.client.ServiceInstance;
 import org.springframework.cloud.client.loadbalancer.LoadBalancerClient;
@@ -17,6 +18,7 @@ import java.util.Map;
 import java.util.UUID;
 
 @Service
+@Slf4j
 public class ProductOrderServiceImpl implements ProductOrderService {
 
     @Autowired
@@ -61,7 +63,7 @@ public class ProductOrderServiceImpl implements ProductOrderService {
 
         //调用用户服务，主要是获取用户名称，用户的级别或者积分信息
         //TODO
-
+        log.info("service save order");
         JsonNode jsonNode=JsonUtils.str2JsonNode(response);
         ProductOrder productOrder= ProductOrder.builder().createTime(new Date())
                 .userId(userId).tradeNo(UUID.randomUUID().toString())

@@ -3,6 +3,7 @@ package com.tj.order_service.Controller;
 import com.netflix.hystrix.contrib.javanica.annotation.HystrixCommand;
 import com.tj.order_service.domain.ProductOrder;
 import com.tj.order_service.service.ProductOrderService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.util.StringUtils;
@@ -18,6 +19,7 @@ import java.util.concurrent.TimeUnit;
 
 @RestController
 @RequestMapping("api/v1/order")
+@Slf4j
 public class OrderController {
 
     @Autowired
@@ -29,6 +31,13 @@ public class OrderController {
     @RequestMapping("save")
     @HystrixCommand(fallbackMethod = "saveOrderFail")
     public Object save(@RequestParam("user_id")int userId, @RequestParam("product_id") int productId, HttpServletRequest request){
+
+        String token=request.getHeader("token");
+        String cookie=request.getHeader("cookie");
+        log.info("token="+token);
+        log.info("cookie="+cookie);
+
+
         //第一种方法
         ProductOrder productOrder=productOrderService.save(userId,productId);
         Map<String ,Object> msg=new HashMap<>();
@@ -41,6 +50,11 @@ public class OrderController {
     @RequestMapping("saveByOpenReign")
     @HystrixCommand(fallbackMethod = "saveOrderFail")
     public Object saveByOpenReign(@RequestParam("user_id")int userId,@RequestParam("product_id") int productId,HttpServletRequest request){
+        String token=request.getHeader("token");
+        String cookie=request.getHeader("cookie");
+        log.info("token="+token);
+        log.info("cookie="+cookie);
+
         //第二种方法 openreign
         ProductOrder productOrder=productOrderService.saveByOpenReign(userId,productId);
         Map<String ,Object> msg=new HashMap<>();
